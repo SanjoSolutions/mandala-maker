@@ -1,4 +1,3 @@
-import { debounce } from './debounce.js'
 import { convertDegreesToRadian as degrees } from './unnamed/convertDegreesToRadian.js'
 import { createFullDocumentCanvas } from './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.js'
 import { distance } from './unnamed/distance.js'
