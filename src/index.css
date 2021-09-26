@@ -16,7 +16,7 @@ body.fill-mode {
 .fill {
   position: absolute;
   left: 1rem;
-  bottom: 3rem;
+  bottom: 5rem;
 }
 
 .fill .material-icons-outlined {
@@ -26,5 +26,28 @@ body.fill-mode {
 .set-angle {
   position: absolute;
   left: 1rem;
+  bottom: 3rem;
+}
+
+.color-picker {
+  display: none;
+  position: absolute;
+  left: 1rem;
+  bottom: 2.375rem;
+  background-color: white;
+}
+
+body.picking-color .color-picker {
+  display: block;
+}
+
+.pick-color {
+  position: absolute;
+  left: 1rem;
   bottom: 1rem;
+}
+
+.picked-color {
+  width: 1rem;
+  height: 1rem;
 }

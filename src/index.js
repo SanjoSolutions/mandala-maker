@@ -1,14 +1,45 @@
+import './index.css'
+import './material-design-icons/outlined.css'
 import { convertDegreesToRadian as degrees } from './unnamed/convertDegreesToRadian.js'
+import './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.css'
 import { createFullDocumentCanvas } from './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.js'
 import { distance } from './unnamed/distance.js'
-import './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.css'
-import './index.css'
-import { union, difference } from './unnamed/packages/set/src/set.ts'
-import './material-design-icons/outlined.css'
+import { ColorPicker } from './color-picker/ColorPicker.js'
+import { hslToRgb } from './unnamed/hslToRgb.js'
 
 async function main() {
+  customElements.define('color-picker', ColorPicker)
+
   const { canvas, context } = createFullDocumentCanvas()
   document.body.appendChild(canvas)
+  let color = [0, 0, 0, 255]
+
+  const $pickColor = document.querySelector('.pick-color')
+  $pickColor.addEventListener('pointerdown', function (event) {
+    event.stopPropagation()
+  })
+  $pickColor.addEventListener('click', function () {
+    document.body.classList.toggle('picking-color')
+  })
+
+  const $pickedColor = document.querySelector('.picked-color')
+  $pickedColor.style.backgroundColor = '#000'
+
+  const $colorPickerContainer = document.querySelector('.color-picker')
+  $colorPickerContainer.addEventListener('pointerdown', function (event) {
+    event.stopPropagation()
+  })
+
+  const $colorPicker = $colorPickerContainer.querySelector('color-picker')
+  $colorPicker.addEventListener('change', function (event) {
+    const pickedColor = event.detail
+    const { hue, saturation, lightness } = pickedColor
+    const colorString = `hsl(${ hue }, ${ saturation * 100 }%, ${ lightness * 100 }%)`
+    $pickedColor.style.backgroundColor = colorString
+    context.strokeStyle = colorString
+    const rgb = hslToRgb(hue / 360, saturation, lightness)
+    color = [rgb[0], rgb[1], rgb[2], 255]
+  })
 
   let angle = degrees(60)
 
@@ -47,7 +78,7 @@ async function main() {
     if (isLeftMouseButton(event)) {
       const point = eventToPoint(event)
       if (isFillModeActive()) {
-        fill(canvas, context, point, [0, 0, 0, 255])
+        fill(canvas, context, point, color)
       } else {
         isDrawing = true
         drawLine(point, point)
@@ -175,7 +206,7 @@ function readColor(imageData, position) {
     data[index],
     data[index + 1],
     data[index + 2],
-    data[index + 3]
+    data[index + 3],
   ]
 }
 

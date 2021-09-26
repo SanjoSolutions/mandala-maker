@@ -1,3 +1,6 @@
 [submodule "src/unnamed"]
 	path = src/unnamed
 	url = https://github.com/SanjoSolutions/unnamed.git
+[submodule "src/color-picker"]
+	path = src/color-picker
+	url = https://github.com/SanjoSolutions/color-picker.git
