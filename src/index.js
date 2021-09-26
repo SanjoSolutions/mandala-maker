@@ -10,7 +10,22 @@ import { hslToRgb } from './unnamed/hslToRgb.js'
 async function main() {
   customElements.define('color-picker', ColorPicker)
 
-  const { canvas, context } = createFullDocumentCanvas()
+  let width = window.innerWidth
+  let height = window.innerHeight
+  const { canvas, context } = createFullDocumentCanvas({
+    afterCanvasSizeAndScaleSet() {
+      if (window.innerHeight > height) {
+        context.fillStyle = 'white'
+        context.fillRect(0, height, window.innerWidth, window.innerHeight - height)
+      }
+      if (window.innerWidth > width) {
+        context.fillStyle = 'white'
+        context.fillRect(width, 0, window.innerWidth - width, window.innerHeight)
+      }
+      width = window.innerWidth
+      height = window.innerHeight
+    }
+  })
   context.fillStyle = 'white'
   context.fillRect(0, 0, window.innerWidth, window.innerHeight)
   document.body.appendChild(canvas)
