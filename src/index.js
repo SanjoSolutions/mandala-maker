@@ -185,7 +185,7 @@ export function fill(canvas, context, position, color) {
     nextPositions = new Set()
     for (const position of positions) {
       const colorAtPosition = readColor(imageData, position)
-      if (areColorsEqual(colorAtPosition, filledOutColor)) {
+      if (areColorsSimilar(colorAtPosition, filledOutColor)) {
         setColor(imageData, position, color)
         const neighbourPositions = determineNeighbours(imageData, position)
         for (const position of neighbourPositions) {
@@ -219,9 +219,9 @@ function setColor(imageData, position, color) {
   }
 }
 
-function areColorsEqual(colorA, colorB) {
+function areColorsSimilar(colorA, colorB) {
   for (let index = 0; index < 4; index++) {
-    if (colorA[index] !== colorB[index]) {
+    if (Math.abs(colorA[index] - colorB[index]) > 0x2) {
       return false
     }
   }
