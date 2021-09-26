@@ -6,6 +6,7 @@
     "target": "ESNext",
     "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "downlevelIteration": true
   }
 }
