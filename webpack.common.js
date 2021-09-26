@@ -10,7 +10,7 @@ export default {
   },
   output: {
     filename: 'index.js',
-    path: resolve(__dirname, 'public'),
+    path: resolve(__dirname, 'dist'),
     library: {
       type: 'module'
     }
