@@ -1,7 +1,6 @@
 import { convertDegreesToRadian as degrees } from './unnamed/convertDegreesToRadian.js'
 import { createFullDocumentCanvas } from './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.js'
 import { distance } from './unnamed/distance.js'
-import isEqual from 'lodash.isequal'
 import './unnamed/createFullDocumentCanvas/createFullDocumentCanvas.css'
 import './index.css'
 import { union, difference } from './unnamed/packages/set/src/set.ts'
@@ -178,7 +177,12 @@ function setColor(imageData, position, color) {
 }
 
 function areColorsEqual(colorA, colorB) {
-  return isEqual(colorA, colorB)
+  for (let index = 0; index < 4; index++) {
+    if (colorA[index] !== colorB[index]) {
+      return false
+    }
+  }
+  return true
 }
 
 function calculateIndex(imageData, position) {
