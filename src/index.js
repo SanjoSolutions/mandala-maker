@@ -149,16 +149,20 @@ export function fill(canvas, context, position, color) {
   let nextPositions = new Set(determineNeighbours(imageData, position))
   while (nextPositions.size >= 1) {
     const positions = nextPositions
-    nextPositions = []
+    nextPositions = new Set()
     for (const position of positions) {
       const colorAtPosition = readColor(imageData, position)
       if (areColorsEqual(colorAtPosition, filledOutColor)) {
         setColor(imageData, position, color)
-        nextPositions = nextPositions.concat(determineNeighbours(imageData, position))
+        const neighbourPositions = determineNeighbours(imageData, position)
+        for (const position of neighbourPositions) {
+          if (!alreadyVisitedPositions.has(position)) {
+            nextPositions.add(position)
+          }
+        }
       }
       alreadyVisitedPositions.add(position)
     }
-    nextPositions = difference(new Set(nextPositions), alreadyVisitedPositions)
   }
 
   context.putImageData(imageData, 0, 0)
