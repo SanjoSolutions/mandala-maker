@@ -9,11 +9,6 @@ const config = merge(
   common,
   {
     mode: 'development',
-    devServer: {
-      static: {
-        directory: __dirname
-      }
-    }
   },
 )
 
