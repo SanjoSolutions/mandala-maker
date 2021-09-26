@@ -170,7 +170,13 @@ export function fill(canvas, context, position, color) {
 
 function readColor(imageData, position) {
   const index = calculateIndex(imageData, position)
-  return imageData.data.slice(index, index + 4)
+  const data = imageData.data
+  return [
+    data[index],
+    data[index + 1],
+    data[index + 2],
+    data[index + 3]
+  ]
 }
 
 function setColor(imageData, position, color) {
