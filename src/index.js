@@ -11,6 +11,8 @@ async function main() {
   customElements.define('color-picker', ColorPicker)
 
   const { canvas, context } = createFullDocumentCanvas()
+  context.fillStyle = 'white'
+  context.fillRect(0, 0, window.innerWidth, window.innerHeight)
   document.body.appendChild(canvas)
   let color = [0, 0, 0, 255]
 
