@@ -146,19 +146,19 @@ export function fill(canvas, context, position, color) {
   const alreadyVisitedPositions = new Set()
   setColor(imageData, position, color)
   alreadyVisitedPositions.add(position)
-  let nextPositions = determineNeighbours(imageData, position)
+  let nextPositions = new Set(determineNeighbours(imageData, position))
   while (nextPositions.size >= 1) {
     const positions = nextPositions
-    nextPositions = new Set()
+    nextPositions = []
     for (const position of positions) {
       const colorAtPosition = readColor(imageData, position)
       if (areColorsEqual(colorAtPosition, filledOutColor)) {
         setColor(imageData, position, color)
-        nextPositions = union(nextPositions, determineNeighbours(imageData, position))
+        nextPositions = nextPositions.concat(determineNeighbours(imageData, position))
       }
       alreadyVisitedPositions.add(position)
     }
-    nextPositions = difference(nextPositions, alreadyVisitedPositions)
+    nextPositions = difference(new Set(nextPositions), alreadyVisitedPositions)
   }
 
   context.putImageData(imageData, 0, 0)
@@ -192,19 +192,19 @@ function calculateIndex(imageData, position) {
 
 function determineNeighbours(imageData, position) {
   const { x, y } = position
-  const positions = new Set()
+  const positions = []
 
   if (y >= 1) {
-    positions.add({ x, y: y - 1 })
+    positions.push({ x, y: y - 1 })
   }
   if (x <= imageData.width - 2) {
-    positions.add({ x: x + 1, y })
+    positions.push({ x: x + 1, y })
   }
   if (y <= imageData.height - 2) {
-    positions.add({ x, y: y + 1 })
+    positions.push({ x, y: y + 1 })
   }
   if (x >= 1) {
-    positions.add({ x: x - 1, y })
+    positions.push({ x: x - 1, y })
   }
 
   return positions
