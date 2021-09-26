@@ -1,3 +1,7 @@
+body.fill-mode {
+  cursor: url(material-design-icons/outline_format_color_fill_black_18dp.png), auto;
+}
+
 .pencil {
   pointer-events: none;
   position: absolute;
@@ -7,6 +11,16 @@
   border: 1px solid black;
   border-radius: 50%;
   z-index: 3;
+}
+
+.fill {
+  position: absolute;
+  left: 1rem;
+  bottom: 3rem;
+}
+
+.fill .material-icons-outlined {
+  font-size: 1rem;
 }
 
 .set-angle {
